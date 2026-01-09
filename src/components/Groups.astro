@@ -1,0 +1,46 @@
+---
+const ministries = [
+    {
+        title: "Niños",
+        desc: "Un espacio seguro para que los más pequeños conozcan el amor de Dios en Su Palabra.",
+        delay: ""
+    },
+    {
+        title: "Jóvenes",
+        desc: "Charlas honestas sobre la vida, la fe y los retos de hoy a la luz de las Escrituras.",
+        delay: "delay-100"
+    },
+    {
+        title: "Caballeros",
+        desc: "Hombres buscando ser mejores esposos, padres y amigos siguiendo el ejemplo de Cristo.",
+        delay: "delay-200"
+    },
+    {
+        title: "Damas",
+        desc: "Un círculo de apoyo, oración y fortaleza espiritual entre mujeres con propósito.",
+        delay: "delay-300"
+    }
+];
+---
+<section id="comunidad" class="py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-20 reveal text-center">
+            <span class="text-ccer-accent font-bold tracking-[0.2em] text-[11px] uppercase block mb-4">Vida de Iglesia</span>
+            <h2 class="text-4xl md:text-6xl font-serif text-ccer-deep italic">Para cada etapa.</h2>
+            <div class="w-16 h-0.5 bg-ccer-deep mx-auto mt-6 opacity-10"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {ministries.map(item => (
+                <div class={`group bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-subtle reveal ${item.delay} transition-all hover:shadow-soft hover:-translate-y-1`}>
+                    <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-8 text-ccer-deep group-hover:bg-ccer-deep group-hover:text-white transition-colors border border-slate-100">
+                        {/* Puedes mapear diferentes iconos SVG aquí según el título si deseas */}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    </div>
+                    <h4 class="text-2xl font-serif mb-4 text-ccer-deep italic">{item.title}</h4>
+                    <p class="text-ccer-stone text-sm leading-relaxed font-light">{item.desc}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

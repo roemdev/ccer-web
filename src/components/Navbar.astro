@@ -1,0 +1,82 @@
+---
+const navLinks = [
+  { href: "#inicio", label: "Inicio" },
+  { href: "#encuentros", label: "Horarios" },
+  { href: "#identidad", label: "Quiénes somos" },
+  { href: "#comunidad", label: "Grupos" },
+  { href: "#oracion", label: "Oración" },
+];
+---
+
+<nav id="navbar" class="fixed w-full z-[100] px-6 py-6 transition-all duration-500">
+    <div id="nav-container" class="max-w-6xl mx-auto flex justify-between items-center bg-white/80 backdrop-blur-md rounded-2xl px-6 py-3 border border-slate-200 shadow-subtle">
+        <a href="/" class="flex items-center">
+            <img src="/logo.png" alt="Logo CCER" class="h-10 w-auto object-contain">
+        </a>
+        
+        <div class="hidden md:flex items-center gap-10 text-[13px] tracking-wide font-medium text-ccer-stone">
+            {navLinks.map(link => (
+                <a href={link.href} class="hover:text-ccer-deep transition-colors">{link.label}</a>
+            ))}
+        </div>
+
+        <button class="md:hidden p-2 text-ccer-deep" id="menuBtn" aria-label="Abrir Menú">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="12" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </div>
+</nav>
+
+<!-- Menú Móvil Mejorado -->
+<div id="mobileMenu" class="fixed inset-0 bg-ccer-earth z-[110] flex flex-col items-center justify-center gap-10 translate-y-full transition-transform duration-500 ease-in-out">
+    <button id="closeMenu" class="absolute top-10 right-10 p-2 text-ccer-deep">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    {navLinks.map(link => (
+        <a href={link.href} class="text-3xl font-serif text-ccer-deep hover:text-ccer-accent transition-colors mobile-link">{link.label}</a>
+    ))}
+</div>
+
+<script>
+    // Función para manejar el navbar y el menú
+    const initNavbar = () => {
+        const nav = document.getElementById('navbar');
+        const navContainer = document.getElementById('nav-container');
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        // Scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav?.classList.add('py-4');
+                navContainer?.classList.add('bg-white/95', 'shadow-soft');
+            } else {
+                nav?.classList.remove('py-4');
+                navContainer?.classList.remove('bg-white/95', 'shadow-soft');
+            }
+        });
+
+        // Toggle Menu
+        const openMenu = () => {
+            mobileMenu?.classList.remove('translate-y-full');
+            mobileMenu?.classList.add('translate-y-0');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const hideMenu = () => {
+            mobileMenu?.classList.remove('translate-y-0');
+            mobileMenu?.classList.add('translate-y-full');
+            document.body.style.overflow = 'auto';
+        };
+
+        menuBtn?.addEventListener('click', openMenu);
+        closeMenu?.addEventListener('click', hideMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', hideMenu));
+    };
+
+    // Ejecutar al cargar
+    initNavbar();
+    // Reiniciar si usas ViewTransitions de Astro
+    document.addEventListener('astro:after-swap', initNavbar);
+</script>

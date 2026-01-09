@@ -1,16 +1,81 @@
 ---
+import Layout from '../layouts/layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Schedule from '../components/Schedule.astro';
+import Identity from '../components/Identity.astro';
+import Groups from '../components/Groups.astro';
+import Prayer from '../components/Prayer.astro';
+import Location from '../components/Location.astro';
+import Footer from '../components/Footer.astro';
 
+// Datos para el Schema.org
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "Church",
+  "name": "Centro Cristiano El Redentor",
+  "description": "Un lugar para buscar a Dios con total libertad en Santiago de los Caballeros.",
+  "url": Astro.url.origin,
+  "logo": new URL("/logo.png", Astro.url.origin).href,
+  "image": new URL("/og-image.jpg", Astro.url.origin).href,
+  "telePhone": "+18095550123",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Franco Bidó, #420, Camboya Marilopez",
+    "addressLocality": "Santiago de los Caballeros",
+    "addressRegion": "Santiago",
+    "addressCountry": "DO"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "19.429125",
+    "longitude": "-70.689191"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "09:30",
+      "closes": "11:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Wednesday",
+      "opens": "19:30",
+      "closes": "21:00"
+    }
+  ]
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="CCER | Centro Cristiano El Redentor - Santiago de los Caballeros">
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(schemaData)} />
+
+	<Navbar />
+	<main>
+		<Hero />
+		<Schedule />
+		<Identity />
+		<Groups />
+		<Prayer />
+		<Location />
+	</main>
+	<Footer />
+
+    <div id="toast" class="invisible opacity-0 fixed bottom-8 left-1/2 -translate-x-1/2 bg-ccer-deep text-ccer-earth px-6 py-3 rounded-xl z-[1000] text-sm shadow-2xl transition-all duration-300">
+		Dirección copiada para tu GPS
+	</div>
+</Layout>
+
+<script>
+    const initReveals = () => {
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+    };
+    document.addEventListener('DOMContentLoaded', initReveals);
+</script>
